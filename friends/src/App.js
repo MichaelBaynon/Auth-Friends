@@ -7,7 +7,7 @@ import { BrowserRouter  as Router, Route, Link} from "react-router-dom";
 
 function App() {
   return (
-    <Router>
+   <div>
     
      <h1>FRIENDS</h1>
 
@@ -17,7 +17,7 @@ function App() {
     <Route path='/login' component={Login} />
     <PrivateRoute exact path='/friends' component={Friends} />
 
-    </Router>
+    </div>
   );
 }
 

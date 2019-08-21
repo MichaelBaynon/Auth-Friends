@@ -1,47 +1,40 @@
-import React from 'react'
+import React, {useState }from 'react'
 import {Link} from "react-router-dom";
 import axios from 'axios'
 
-class Login extends React.Component {
+const Login = (props) => {
 
-state = {
-    credentials: {
-        username: '',
-        password: ''
-}
-}
+const [creds, setCreds] = useState({username: '', password: ''})
 
-handleChange = e => {
-    this.setState({
-        credentials: {
-            ...this.state.credentials,
-            [e.target.name]: e.target.value
-        }
-    })
+const handleChange = event => {
+    setCreds({...creds, [event.target.name]: event.target.value })
 }
 
-login = e => {
-    e.preventDefault()
-    axios.post('http://localhost:5000/api/login', this.state.credentials)
+const handleSubmit = event => {
+    event.preventDefault()
+    axios.post('http://localhost:5000/api/login', creds)
     .then(res => {
+        console.log(res)
         localStorage.setItem('token', res.data.payload)
+        props.history.push('/friends')
     })
     .catch(err => console.log(err.response))
 }
 
-    render() {
+
+    
         return (
             <div>
               <h2>  LOGIN PAGE</h2>
                 <Link to='/'>Home</Link>
-            <form onSubmit={this.login}>
-                 <input type='text' name='username' value={this.state.credentials.username} placeholder='username' onChange={this.handleChange} />
-                 <input type='password' name='password'  value={this.state.credentials.password} placeholder='password' onChange={this.handleChange} />
+            <form onSubmit={handleSubmit}>
+                 <input type='text' name='username'  placeholder='username' onChange={handleChange} />
+                 <input type='password' name='password'  placeholder='password' onChange={handleChange} />
                  <button>Log In</button>
             </form>
             </div>
         )
     }
-}
+
 
 export default Login 
