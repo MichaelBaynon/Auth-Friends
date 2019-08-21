@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter  as Router, Route, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from 'axios'
 
 class Login extends React.Component {
@@ -22,9 +22,11 @@ handleChange = e => {
 
 login = e => {
     e.preventDefault()
-    axios.post('hhtp://localhost:5000/api/login', this.state.credentials)
-    .then()
-    .catch()
+    axios.post('http://localhost:5000/api/login', this.state.credentials)
+    .then(res => {
+        localStorage.setItem('token', res.data.payload)
+    })
+    .catch(err => console.log(err.response))
 }
 
     render() {
@@ -33,8 +35,8 @@ login = e => {
               <h2>  LOGIN PAGE</h2>
                 <Link to='/'>Home</Link>
             <form onSubmit={this.login}>
-                 <input type='text' name='username' value={this.state.username} placeholder='username' onChange={this.handleChange} />
-                 <input value={this.state.password} placeholder='password' />
+                 <input type='text' name='username' value={this.state.credentials.username} placeholder='username' onChange={this.handleChange} />
+                 <input type='password' name='password'  value={this.state.credentials.password} placeholder='password' onChange={this.handleChange} />
                  <button>Log In</button>
             </form>
             </div>
