@@ -27,15 +27,7 @@ getData = () => {
         console.log('results', this.state.friends)
         return(
             <div>
-                people!
-                people!
-                people!
-                people!
-                people!
-                people!
-                people!
-                people!
-                people!
+            this.state.friends
             </div>
         )
     }
